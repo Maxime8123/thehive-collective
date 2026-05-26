@@ -1,0 +1,31 @@
+name: Daily distribution
+on:
+  schedule:
+    - cron: '17 3 * * *'   # 03:17 UTC daily (off-round to spread the fleet)
+  workflow_dispatch:
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '22' }
+      - name: KB health snapshot
+        env:
+          HIVE_API_KEY: ${{ secrets.HIVE_API_KEY }}
+        run: node scripts/cron/kb-health.mjs
+      - name: Densify 10 new entries
+        env:
+          HIVE_API_KEY: ${{ secrets.HIVE_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: node scripts/cron/densify-batch.mjs
+      - name: Commit log changes
+        run: |
+          git config user.name "thehive-autorun"
+          git config user.email "bot@thehivecollective.io"
+          git add AUTONOMOUS-LOG.md || true
+          git diff --cached --quiet || git commit -m "log: daily run $(date -u +%Y-%m-%d)"
+          git push || true
