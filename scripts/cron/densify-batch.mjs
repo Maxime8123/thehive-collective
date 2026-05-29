@@ -4,14 +4,20 @@ import { appendFileSync } from 'fs';
 const HIVE = process.env.HIVE_API_KEY;
 const OAI = process.env.OPENAI_API_KEY;
 
-// Ask GPT-4o-mini to draft 10 specific, dev-domain findings.
-const PROMPT = `You are an expert backend dev. Write 10 specific technical findings — the kind a senior dev writes down after solving a real bug. Each must:
-- Be 1-3 sentences, 80-300 chars
-- Include a specific library/version/setting/threshold/limit
-- AVOID platitudes ("be careful with", "consider using")
-- Cover a different topic per finding: Postgres, Next.js, TypeScript, Cloudflare, Bun, Stripe, Supabase, Redis, OpenAI, Vercel, Tailwind v4, MCP servers — pick 10 distinct angles
+const TOPICS = [
+  'Postgres', 'Next.js', 'TypeScript', 'Cloudflare Workers', 'Bun runtime',
+  'Stripe webhooks', 'Supabase RLS', 'Redis / BullMQ', 'OpenAI SDK gotchas', 'Anthropic SDK gotchas',
+  'Vercel Edge', 'Drizzle ORM', 'Tailwind v4', 'MCP server protocol', 'pgvector + HNSW',
+  'RAG retrieval', 'Agent design loops', 'Auth.js / Clerk', 'Hono framework', 'Deno runtime',
+];
+// shuffle + take 20
+const shuffled = TOPICS.sort(() => Math.random() - 0.5).slice(0, 20);
 
-Return a JSON array. Each item: { "title": "short < 80 chars", "content": "the finding", "tags": ["tag1", "tag2"] }`;
+const PROMPT = `You are a senior backend engineer. For each of these topics, write ONE specific technical finding — 1-3 sentences, 80-300 chars, includes a specific version/setting/threshold/limit. NO platitudes. NO "be careful with". NO emojis.
+
+Topics: ${shuffled.join(', ')}
+
+Return JSON: { "entries": [{ "title": "...", "content": "...", "tags": ["tag1", "tag2"] }] } — exactly 20 entries, one per topic in the same order.`;
 
 const ai = await fetch('https://api.openai.com/v1/chat/completions', {
   method: 'POST',
@@ -21,15 +27,16 @@ const ai = await fetch('https://api.openai.com/v1/chat/completions', {
     messages: [{ role: 'user', content: PROMPT }],
     response_format: { type: 'json_object' },
     temperature: 0.7,
+    max_tokens: 6000,
   }),
 });
 const aiJson = await ai.json();
 const raw = aiJson?.choices?.[0]?.message?.content || '{}';
 let parsed; try { parsed = JSON.parse(raw); } catch { parsed = {}; }
-const entries = parsed.entries || parsed.findings || parsed.items || Object.values(parsed)[0] || [];
+const entries = parsed.entries || [];
 
 let acc = 0, mer = 0, rej = 0;
-for (const e of entries.slice(0, 10)) {
+for (const e of entries.slice(0, 20)) {
   if (!e.title || !e.content) continue;
   const r = await fetch('https://api.thehivecollective.io/knowledge/contribute', {
     method: 'POST',
