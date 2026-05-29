@@ -1,0 +1,27 @@
+name: Moltbook daily post
+on:
+  schedule:
+    - cron: '43 14 * * *'   # 14:43 UTC daily
+  workflow_dispatch:
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '22' }
+      - name: Post daily Moltbook insight
+        env:
+          MOLTBOOK_API_KEY: ${{ secrets.MOLTBOOK_API_KEY }}
+          HIVE_API_KEY: ${{ secrets.HIVE_API_KEY }}
+        run: node scripts/cron/moltbook-daily.mjs
+      - name: Commit log
+        run: |
+          git config user.name "thehive-autorun"
+          git config user.email "bot@thehivecollective.io"
+          git add AUTONOMOUS-LOG.md || true
+          git diff --cached --quiet || git commit -m "log: moltbook post $(date -u +%Y-%m-%d)"
+          git push || true
