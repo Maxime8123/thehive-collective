@@ -1,0 +1,38 @@
+name: Hourly monitor
+on:
+  schedule:
+    - cron: '23 * * * *'  # 23 past every hour
+  workflow_dispatch:
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '22' }
+      - name: Health ping
+        env:
+          HIVE_API_KEY: ${{ secrets.HIVE_API_KEY }}
+        run: |
+          status=$(curl -sS -o /tmp/h.json -w "%{http_code}" https://api.thehivecollective.io/health)
+          if [ "$status" != "200" ]; then
+            echo "- $(date -u +%FT%TZ) · HIVE_API_DOWN: $status" >> AUTONOMOUS-LOG.md
+          fi
+      - name: PR monitor
+        env:
+          GITHUB_PAT: ${{ secrets.GH_READ_PAT }}
+        run: node scripts/cron/pr-monitor.mjs
+      - name: devto comments
+        env:
+          GITHUB_PAT: ${{ secrets.GH_READ_PAT }}
+        run: node scripts/cron/devto-comments.mjs
+      - name: Commit log changes
+        run: |
+          git config user.name "thehive-autorun"
+          git config user.email "bot@thehivecollective.io"
+          git add AUTONOMOUS-LOG.md || true
+          git diff --cached --quiet || git commit -m "log: hourly run $(date -u +%H:%MZ)"
+          git push || true
