@@ -1,0 +1,27 @@
+name: Weekly content push (Mon + Thu)
+on:
+  schedule:
+    - cron: '47 18 * * 1,4'   # Mon + Thu 18:47 UTC (≈ 14:47 ET / 13:47 CT)
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '22' }
+      - name: Pick + publish dev.to article
+        env:
+          DEV_TO_API_KEY: ${{ secrets.DEV_TO_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: node scripts/cron/devto-publish.mjs
+      - name: Append log
+        run: |
+          git config user.name "thehive-autorun"
+          git config user.email "bot@thehivecollective.io"
+          git add AUTONOMOUS-LOG.md || true
+          git diff --cached --quiet || git commit -m "log: weekly content $(date -u +%Y-%m-%d)"
+          git push || true
