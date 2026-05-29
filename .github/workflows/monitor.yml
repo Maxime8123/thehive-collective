@@ -1,0 +1,28 @@
+name: Site + customer monitor
+on:
+  schedule:
+    - cron: '*/29 * * * *'   # every 29 min (off-round)
+  workflow_dispatch:
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '22' }
+      - name: Run monitor
+        env:
+          HIVE_API_KEY: ${{ secrets.HIVE_API_KEY }}
+          GH_READ_PAT: ${{ secrets.GH_READ_PAT }}
+          MOLTBOOK_API_KEY: ${{ secrets.MOLTBOOK_API_KEY }}
+        run: node scripts/cron/monitor.mjs
+      - name: Commit log + state
+        run: |
+          git config user.name "thehive-autorun"
+          git config user.email "bot@thehivecollective.io"
+          git add AUTONOMOUS-LOG.md .monitor-state.json || true
+          git diff --cached --quiet || git commit -m "monitor: snapshot $(date -u +%FT%TZ)"
+          git push || true
