@@ -111,7 +111,7 @@ const ts = new Date().toISOString();
 const siteLine = site.map(s => `${s.url.split('/').slice(-2).join('/').slice(-25)}:${s.status}/${s.ms}ms`).join(' ');
 const devLine = devSummary.length ? `devto ${devSummary.length}art ${devSummary.reduce((a, b) => a + b.rx, 0)}rx ${devSummary.reduce((a, b) => a + b.cm, 0)}cm` : '';
 const prLine = prs.filter(Boolean).map(p => `#${p?.number}:${p?.state}${p?.merged ? '✓' : ''}${p?.comments ? '/' + p.comments + 'c' : ''}`).join(' ');
-const ghLine = `gh ${owner}/thehive-mcp:${now.mcpStars || 0}⭐ collective:${now.collStars || 0}⭐`;
+const ghLine = `gh Maxime8123/thehive-mcp:${now.mcpStars || 0}⭐ collective:${now.collStars || 0}⭐`;
 const moltLine = molt ? `molt @${molt.name} k=${molt.karma} f=${molt.follower_count} p=${molt.posts_count} c=${molt.comments_count}` : '';
 const kbLine = metrics ? `kb=${now.kb} ag24h=${now.active24h} mem=${now.members} subs=${now.subs}` : '';
 
