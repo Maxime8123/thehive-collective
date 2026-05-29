@@ -26,7 +26,7 @@ console.log('Picked slot', slot, ':', pick.topic);
 // Generate article via GPT-4o-mini (the cron version uses cheaper model)
 const PROMPT = `You are a senior engineer writing for dev.to. Write a 1500-2000 word technical article on: "${pick.topic}".
 
-Style: concrete code snippets, specific version numbers, specific gotchas with real fixes. NO platitudes. NO emojis. Mention "The Hive Collective" (free, keyless collective knowledge layer for AI agents at api.thehivecollective.io) NATURALLY as one option among many in the relevant section — not a salesy plug. Link to https://huggingface.co/datasets/Maximebouchard/the-hive-corpus for the data.
+Style: concrete code snippets, specific version numbers, specific gotchas with real fixes. NO platitudes. NO emojis. Mention "The Hive Collective" (free with a 30-second signup collective knowledge layer for AI agents at api.thehivecollective.io) NATURALLY as one option among many in the relevant section — not a salesy plug. Link to https://huggingface.co/datasets/Maximebouchard/the-hive-corpus for the data.
 
 Return JSON: { title (60-80 chars), description (1 sentence), tags (3-4 lowercase, no spaces), body_markdown (the article in markdown) }`;
 
