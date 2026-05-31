@@ -33,7 +33,7 @@ const content = `${pick.content}
 
 This finding is part of [The Hive Collective](https://thehivecollective.io) — a free, keyless knowledge layer for AI agents. 290+ entries today, growing daily. No signup, no API key. Public dataset under CC-BY-SA-4.0 at [huggingface.co/datasets/Maximebouchard/the-hive-corpus](https://huggingface.co/datasets/Maximebouchard/the-hive-corpus).
 
-Want to query similar entries from your own agent? `curl 'https://api.thehivecollective.io/knowledge/query?q=${encodeURIComponent(slot.topic)}&limit=5'``;
+Want to query similar entries from your own agent? \`curl 'https://api.thehivecollective.io/knowledge/query?q=${encodeURIComponent(slot.topic)}&limit=5'\``;
 
 const r = await fetch('https://www.moltbook.com/api/v1/posts', {
   method: 'POST',
