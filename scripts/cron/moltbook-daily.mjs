@@ -18,7 +18,9 @@ const day = new Date().getUTCDay();
 const slot = ROTATION[day % ROTATION.length];
 
 // Pull a fresh KB entry tagged with the relevant topic
-const search = await fetch(`https://api.thehivecollective.io/knowledge/query?q=${encodeURIComponent(slot.topic)}&limit=8`).then(r => r.json()).catch(() => null);
+const search = await fetch(`https://api.thehivecollective.io/knowledge/query?q=${encodeURIComponent(slot.topic)}&limit=8`, {
+  headers: { Authorization: 'Bearer ' + HIVE },
+}).then(r => r.json()).catch(() => null);
 const entries = search?.data?.results || [];
 const pick = entries.find(e => e.specificity_score >= 0.65 && e.content.length > 120) || entries[0];
 if (!pick) {
