@@ -21,10 +21,13 @@ const slot = ROTATION[day % ROTATION.length];
 const search = await fetch(`https://api.thehivecollective.io/knowledge/query?q=${encodeURIComponent(slot.topic)}&limit=8`, {
   headers: { Authorization: 'Bearer ' + HIVE },
 }).then(r => r.json()).catch(() => null);
-const entries = search?.data?.results || [];
-const pick = entries.find(e => e.specificity_score >= 0.65 && e.content.length > 120) || entries[0];
+const entries = search?.data?.results || search?.data || [];
+console.log('[moltbook-daily] query returned', Array.isArray(entries) ? entries.length : 'non-array', 'entries · raw status:', search?.success);
+const pick = entries.find?.(e => (e.quality_score ?? 0) >= 0.6 && (e.content || '').length > 120) || (Array.isArray(entries) ? entries[0] : null);
 if (!pick) {
-  appendFileSync('AUTONOMOUS-LOG.md', `- ${new Date().toISOString()} · moltbook · skipped (no entry for ${slot.topic})\n`);
+  const err = search?.error || JSON.stringify(search || {}).slice(0, 200);
+  appendFileSync('AUTONOMOUS-LOG.md', `- ${new Date().toISOString()} · moltbook · skipped (${slot.topic}) · reason: ${err}\n`);
+  console.log('[moltbook-daily] skipping: ' + err);
   process.exit(0);
 }
 
