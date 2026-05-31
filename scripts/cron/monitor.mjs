@@ -27,15 +27,18 @@ const site = await Promise.all([
 ]);
 
 // ─── Hive metrics ─────────────────────────────────────────────
-let metrics = null;
-if (HIVE) {
-  try {
-    const m = await fetch('https://api.thehivecollective.io/admin/metrics', {
-      headers: { Authorization: 'Bearer ' + HIVE },
-    }).then(r => r.json());
-    metrics = m?.data || null;
-  } catch {}
-}
+// Public stats from /collective/pulse — no auth required, no founder key needed
+let pulse = null;
+try {
+  const p = await fetch('https://api.thehivecollective.io/collective/pulse').then(r => r.json());
+  pulse = p?.data || null;
+} catch {}
+const metrics = pulse ? {
+  knowledge_base: { total_entries: pulse.entries_total },
+  agents: { active_last_24h: pulse.active_agents },
+  members: { total: pulse.frameworks_count }, // overloaded field; pulse has no member count
+  newsletter: { active_subscribers: pulse.entries_24h }, // overloaded; show +24h delta here
+} : null;
 
 // ─── dev.to article stats ─────────────────────────────────────
 let devto = [];
