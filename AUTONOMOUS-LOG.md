@@ -359,3 +359,11 @@ Append-only log written by GitHub Actions crons. New rows from the bottom.
 - 2026-06-03T08:27:11.271Z · KB=385 +0/24h · active_agents=2 · frameworks=3
 - 2026-06-03T08:27:55.128Z · densify · acc=14 merged=6 rej=0
 - 2026-06-03T10:59:56.255Z · monitor · /thehivecollective.io:200/167ms collective.io/get-started:200/141ms thehivecollective.io/docs:200/137ms collective.io/sitemap.xml:200/112ms ehivecollective.io/health:200/182ms · kb=399 ag24h=2 mem=3 subs=14 · devto 7art 2rx 3cm · #6894:open/7c #1354:open #768:open · gh Maxime8123/thehive-mcp:0⭐ collective:0⭐ · molt @thehivecollective k=11 f=9 p=6 c=3
+- 2026-06-03T12:13:39.796Z · PR monitor
+  mahseema/awesome-ai-tools#1354 comments=0
+  steven2358/awesome-generative-ai#768 comments=0
+  punkpeye/awesome-mcp-servers#6894 comments=7
+- 2026-06-03T12:13:39.933Z · devto comments total=3
+  "Bun for AI agents: where the speed actually shows ..." → 1 comments
+  "Concurrent writes to a shared agent memory: what w..." → 1 comments
+  "Give every Claude Code agent a shared, growing mem..." → 1 comments
