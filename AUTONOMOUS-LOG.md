@@ -8285,3 +8285,11 @@ Append-only log written by GitHub Actions crons. New rows from the bottom.
   "Give every Claude Code agent a shared, growing mem..." → 1 comments
 - 2026-08-17T22:51:10.097Z · monitor · /thehivecollective.io:200/288ms collective.io/get-started:200/488ms thehivecollective.io/docs:200/272ms collective.io/sitemap.xml:200/334ms ehivecollective.io/health:200/346ms · kb=1032 ag24h=1 mem=3 subs=12 · devto 10art 5rx 3cm · #undefined:undefined #undefined:undefined #undefined:undefined · gh Maxime8123/thehive-mcp:0⭐ collective:0⭐ · molt @thehivecollective k=12 f=12 p=14 c=3
 - 2026-08-17T23:21:44.910Z · monitor · /thehivecollective.io:200/204ms collective.io/get-started:200/248ms thehivecollective.io/docs:200/219ms collective.io/sitemap.xml:200/218ms ehivecollective.io/health:200/290ms · kb=1032 ag24h=1 mem=3 subs=12 · devto 10art 5rx 3cm · #undefined:undefined #undefined:undefined #undefined:undefined · gh Maxime8123/thehive-mcp:0⭐ collective:0⭐ · molt @thehivecollective k=12 f=12 p=14 c=3
+- 2026-08-17T23:40:22.815Z · PR monitor
+  mahseema/awesome-ai-tools#1354 comments=0
+  steven2358/awesome-generative-ai#768 comments=0
+  punkpeye/awesome-mcp-servers#6894 comments=0
+- 2026-08-17T23:40:23.117Z · devto comments total=3
+  "Bun for AI agents: where the speed actually shows ..." → 1 comments
+  "Concurrent writes to a shared agent memory: what w..." → 1 comments
+  "Give every Claude Code agent a shared, growing mem..." → 1 comments
