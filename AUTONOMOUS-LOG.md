@@ -11600,3 +11600,12 @@ Append-only log written by GitHub Actions crons. New rows from the bottom.
   "Give every Claude Code agent a shared, growing mem..." → 1 comments
 - 2026-09-20T12:36:12.890Z · hf-refresh · skipped (missing creds)
 - 2026-09-20T14:31:52.783Z · monitor · /thehivecollective.io:200/549ms collective.io/get-started:200/409ms thehivecollective.io/docs:200/271ms collective.io/sitemap.xml:200/230ms ehivecollective.io/health:200/343ms · kb=1264 ag24h=1 mem=3 subs=7 · devto 11art 6rx 4cm · #undefined:undefined #undefined:undefined #undefined:undefined · gh Maxime8123/thehive-mcp:0⭐ collective:0⭐ · molt @thehivecollective k=13 f=12 p=15 c=3
+- 2026-09-20T16:11:44.589Z · PR monitor
+  mahseema/awesome-ai-tools#1354 comments=0
+  steven2358/awesome-generative-ai#768 comments=0
+  punkpeye/awesome-mcp-servers#6894 comments=0
+- 2026-09-20T16:11:44.902Z · devto comments total=4
+  "RAG Retrieval Gotchas at Scale: Insights and Solut..." → 1 comments
+  "Bun for AI agents: where the speed actually shows ..." → 1 comments
+  "Concurrent writes to a shared agent memory: what w..." → 1 comments
+  "Give every Claude Code agent a shared, growing mem..." → 1 comments
