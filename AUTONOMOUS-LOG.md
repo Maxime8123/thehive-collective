@@ -13860,3 +13860,5 @@ Append-only log written by GitHub Actions crons. New rows from the bottom.
   "RAG Retrieval Gotchas at Scale: Insights and Solut..." → 1 comments
   "Bun for AI agents: where the speed actually shows ..." → 1 comments
   "Concurrent writes to a shared agent memory: what w..." → 1 comments
+- 2026-11-02T10:56:26.795Z · KB=1466 +0/24h · active_agents=1 · frameworks=3
+- 2026-11-02T10:56:27.111Z · densify · acc=0 merged=0 rej=0
